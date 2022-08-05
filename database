@@ -1,0 +1,32 @@
+use  expenceTracker;
+create table users (userid int primary key auto_increment ,firstname varchar(30), lastname varchar(30) ,mobileNo varchar(30),email varchar(30),password varchar(30), gender varchar(20),usertype varchar(30));
+
+create table  accounts(accountid int primary key auto_increment ,acc_name varchar(30), acc_no long ,acc_type varchar(30),acc_balance varchar(30),userid int,  FOREIGN KEY (userid) REFERENCES users(userid));
+
+create table  categories(catid int primary key auto_increment ,
+						 cat_name varchar(30),
+                         cat_id int );
+                         
+ALTER TABLE categories
+  ADD userid int, add foreign key (userid) references users(userid);  
+
+create table  subcategories(subcatid int primary key auto_increment ,
+							subcat_name varchar(30),
+                            cat_id int ,
+                            foreign key (cat_id) references categories(catid));
+                            
+                            
+create table  accounttypes(accounttypeid int primary key auto_increment ,acc_type varchar(30));
+
+ALTER TABLE accounts
+  ADD accounttypeid int, add foreign key (accounttypeid) references accounttypes(accounttypeid); 
+  
+alter table accounts drop acc_type;
+
+
+  ALTER TABLE expense
+  ADD accounttypeid int, add foreign key (accounttypeid) references accounttypes(accounttypeid);  
+  
+  
+ --get last element from expense table 
+ SELECT    * FROM      expense ORDER BY  expenseid DESC LIMIT     1;
